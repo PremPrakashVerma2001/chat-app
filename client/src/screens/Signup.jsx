@@ -12,9 +12,9 @@ const Signup = () => {
             type="email"
             name="username"
             id="username"
-            value=""
+            // value=""
             placeholder="xyz@gmail.com"
-            className="w-full  p-2 bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
+            className="w-full text-black p-2 bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
           />
         </div>
         <div className="">
@@ -24,9 +24,9 @@ const Signup = () => {
             type="text"
             name="displayName"
             id="displayName"
-            value=""
+            // value=""
             placeholder="John Doe"
-            className="w-full  p-2 bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
+            className="w-full text-black p-2 bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
           />
         </div>
         <div className="">
@@ -36,9 +36,9 @@ const Signup = () => {
             type="password"
             name="password"
             id="password"
-            value=""
+            // value=""
             placeholder="*****"
-            className="w-full p-2 bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
+            className="w-full text-black p-2 bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
           />
         </div>
         <div className="">
@@ -48,9 +48,9 @@ const Signup = () => {
             type="text"
             name="confirmPassword"
             id="confirmPassword"
-            value=""
+            // value=""
             placeholder="*****"
-            className="w-full  p-2 bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
+            className="w-full text-black p-2 bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
           />
         </div>
         <div className="text-center space-y-2">

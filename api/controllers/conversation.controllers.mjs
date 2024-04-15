@@ -15,7 +15,7 @@ export const getConversation = async (req, res) => {
 
   const conversation = await Conversation.findOne({
     participants: { $all: [senderId, receiverId] },
-  });
+  }).populate("messages");
   return res.status(200).send(conversation);
 };
 
