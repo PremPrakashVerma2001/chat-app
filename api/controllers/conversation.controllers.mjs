@@ -13,9 +13,14 @@ export const getConversation = async (req, res) => {
   const receiver = await User.findById(receiverId);
   if (!receiver) return res.status(401).send({ error: "Invalid Receiver!" });
 
-  const conversation = await Conversation.findOne({
+  let conversation = await Conversation.findOne({
     participants: { $all: [senderId, receiverId] },
   }).populate("messages");
+  if (!conversation) {
+    conversation = await Conversation.create({
+      participants: [senderId, receiverId],
+    });
+  }
   return res.status(200).send(conversation);
 };
 
@@ -54,11 +59,11 @@ export const sendMessageToConversation = async (req, res) => {
     conversation.messages.push(newMessage._id);
     await Promise.all([conversation.save(), newMessage.save()]);
 
-    const wholeConversation = await Conversation.findOne({
-      participants: { $all: [senderId, receiverId] },
-    }).populate("messages");
+    // const wholeConversation = await Conversation.findOne({
+    //   participants: { $all: [senderId, receiverId] },
+    // }).populate("messages");
 
-    return res.status(201).send(wholeConversation);
+    return res.status(201).send(newMessage);
   } catch (error) {
     console.error(error);
     return res.status(500).send(error);

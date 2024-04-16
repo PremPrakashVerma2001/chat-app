@@ -20,6 +20,7 @@ import { User } from "../models/user.model.mjs";
 // };
 
 export const deleteUser = async (req, res) => {
+  console.log(req.originalUrl, req.method);
   const {
     params: { id },
   } = req;
@@ -33,6 +34,7 @@ export const deleteUser = async (req, res) => {
 };
 
 export const getAllUsers = async (req, res) => {
+  console.log(req.originalUrl, req.method);
   const {
     user: { userId },
   } = req;

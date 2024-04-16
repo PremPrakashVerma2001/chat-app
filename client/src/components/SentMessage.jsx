@@ -1,18 +1,36 @@
-import React from "react";
-import { RxAvatar } from "react-icons/rx";
+import React, { useEffect, useState } from "react";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
-const SentMessage = () => {
+const SentMessage = ({ message }) => {
+  const { currentUser } = useCurrentUserContext();
+  const [date, setDate] = useState(new Date(message.createdAt));
+  // console.log("sender ");
+  // useEffect(()=>{
+  //   var d = new Date(date);
+  //   console.log(d);
+  // },[])
   return (
     <div className="flex justify-end p-2 mb-4">
       <div className="bg-slate-800/80 text-white rounded-lg rounded-tr-none py-1 px-2 w-3/4 relative top-3 ">
         <p className=" font-thin text-sm leading-tight pr-2 text-left">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo
-          ipsam consequatur inventore aut et deserunt.
+          {message.message}
         </p>
-        <div className="text-[10px] text-emerald-500 text-right w-full">3:30 AM</div>
+        <div className="text-[10px] text-emerald-500 text-right w-full">
+          {date.toLocaleTimeString() +
+            "  " +
+            date.getDate() +
+            "/" +
+            date.getMonth() +
+            "/" +
+            date.getFullYear()}
+        </div>
       </div>
       <div className="">
-        <RxAvatar size={25} />
+        <img
+          src={currentUser?.profilePic}
+          alt=""
+          className="h-6 aspect-square"
+        />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import { CurrentUserContextProvider } from "./contexts/CurrentUserContext.jsx";
-import { OtherUsersContextProvider } from "./contexts/OtherUsersContext.jsx";
+import { SelectedUserContextProvider } from "./contexts/SelectedUserContext.jsx";
 axios.defaults.baseURL = import.meta.env.VITE_SERVER_BASE_URL;
 axios.defaults.withCredentials = true;
 
@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <AuthProvider>
         <CurrentUserContextProvider>
-          <OtherUsersContextProvider>
+          <SelectedUserContextProvider>
             <App />
             <Toaster
               toastOptions={{
@@ -28,7 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 },
               }}
             />
-          </OtherUsersContextProvider>
+          </SelectedUserContextProvider>
         </CurrentUserContextProvider>
       </AuthProvider>
     </BrowserRouter>

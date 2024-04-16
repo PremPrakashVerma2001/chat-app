@@ -26,9 +26,10 @@ const Login = () => {
       console.log(response.data);
       if (response.status == 200) {
         console.log(response.data);
-        setCurrentUser(response.data);
         localStorage.setItem("chat-auth", "true");
-        localStorage.setItem("chat-user",JSON.stringify(response.data));
+        localStorage.setItem("chat-user", JSON.stringify(response.data));
+        // console.log("current user : ", response.data);
+        setCurrentUser(response.data);
         toast.success("User is Logging In...");
         setIsAuthenticated(true);
       } else {

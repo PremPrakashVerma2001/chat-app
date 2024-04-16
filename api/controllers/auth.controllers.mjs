@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 
 const saltRounds = 10;
 export const login = async (req, res) => {
+  console.log(req.originalUrl, req.method);
   if (req.user)
     return res.status(200).send({ error: "user already logged in" });
   const {
@@ -27,12 +28,14 @@ export const login = async (req, res) => {
   });
 };
 export const logout = (req, res) => {
+  console.log(req.originalUrl, req.method);
   if (!req.user)
     return res.status(400).send({ error: "User is already logged out!" });
   res.clearCookie("jwtToken");
   return res.send({ message: "logout successfully" });
 };
 export const signup = async (req, res) => {
+  console.log(req.originalUrl, req.method);
   const result = validationResult(req);
   if (!result.isEmpty()) return res.status(401).send(result);
   const data = matchedData(req);
@@ -50,13 +53,19 @@ export const signup = async (req, res) => {
     generateJwtToken(newUser._id, res);
     return res
       .status(201)
-      .send({ message: "User is succesfully created and logged in!" });
+      .send({
+        username: newUser.username,
+        displayName: newUser.displayName,
+        profilePic: newUser.profilePic,
+        _id: newUser._id,
+      });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ error: error });
   }
 };
 export const status = (req, res) => {
+  console.log(req.originalUrl, req.method);
   if (req.user) return res.status(200).send({ message: "User is logged in!" });
   return res.status(200).send({ message: "User is NOT logged in !" });
 };

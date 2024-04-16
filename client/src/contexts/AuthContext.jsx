@@ -9,7 +9,7 @@ export const useAuthContext = () => {
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("chat-auth"));
-  console.log("authContext : ", isAuthenticated);
+  // console.log("authContext : ", isAuthenticated);
   return (
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
       {children}

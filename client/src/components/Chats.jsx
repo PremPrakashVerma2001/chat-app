@@ -5,15 +5,17 @@ import Avatar from "./Avatar";
 import { useAuthContext } from "../contexts/AuthContext";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useSelectedUserContext } from "../contexts/SelectedUserContext";
 
 const Chats = () => {
   const { setIsAuthenticated } = useAuthContext();
-  const [users,setUsers] = useState([]);
+  const { setSelectedUser } = useSelectedUserContext();
+  const [users, setUsers] = useState([]);
 
   // const getAllUsers = async ()=>{
   //   try {
   //     const response = await axios.get('/api/users');
-      
+
   //     if(response.status === 200){
   //       console.log(response.data);
   //       setUsers(response.data);
@@ -28,37 +30,39 @@ const Chats = () => {
 
   // getAllUsers();
 
-  const handleExit = async() => {
+  const handleExit = async () => {
     try {
-        const response = await axios.post("/api/auth/logout");
-        if(response.status == 200){
-            localStorage.removeItem("chat-auth");
-            setIsAuthenticated(null);
-            toast.success("User is successfully logged out");
-        }
+      const response = await axios.post("/api/auth/logout");
+      if (response.status == 200) {
+        localStorage.removeItem("chat-auth");
+        localStorage.removeItem("chat-user");
+        localStorage.removeItem("chat-selected-user");
+        toast.success("User is successfully logged out");
+        setSelectedUser(null);
+        setIsAuthenticated(null);
+      }
     } catch (error) {
-        console.error(error)
-        toast.error(error.message);
+      console.error(error);
+      toast.error(error.message);
     }
   };
 
   useEffect(() => {
-    
-    const getAllUsers = async ()=>{
+    const getAllUsers = async () => {
       try {
-        const response = await axios.get('/api/users');
-        
-        if(response.status === 200){
-          console.log(response.data);
+        const response = await axios.get("/api/users");
+
+        if (response.status === 200) {
+          // console.log(response.data);
           setUsers(response.data);
         }
       } catch (error) {
         setIsAuthenticated(false);
-        localStorage.removeItem('chat-auth');
+        localStorage.removeItem("chat-auth");
         console.error(error);
         toast.error(error.message);
       }
-    }
+    };
 
     getAllUsers();
   }, []);
@@ -77,26 +81,9 @@ const Chats = () => {
         {/* <Avatar size={40} />
         <Avatar size={40} />
         <Avatar size={40} /> */}
-        {
-          users.map((user)=>(
-            <Avatar key={user._id} displayName={user.displayName} profilePic={user.profilePic} />
-          ))
-        }
-        {
-          users.map((user)=>(
-            <Avatar key={user._id} displayName={user.displayName} profilePic={user.profilePic} />
-          ))
-        }
-        {
-          users.map((user)=>(
-            <Avatar key={user._id} displayName={user.displayName} profilePic={user.profilePic} />
-          ))
-        }
-        {
-          users.map((user)=>(
-            <Avatar key={user._id} displayName={user.displayName} profilePic={user.profilePic} />
-          ))
-        }
+        {users.map((user) => (
+          <Avatar key={user._id} user={user} />
+        ))}
       </div>
       <div className="text-red-700 font-bold absolute bottom-3 left-3 hover:text-red-500 duration-200 p-2 bg-white/50 hover:bg-white rounded-full">
         <IoExitOutline
