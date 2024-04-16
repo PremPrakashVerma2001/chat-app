@@ -14,7 +14,7 @@ const Home = () => {
   // }
   // hello();
   return (
-    <div className='flex text-black/80 min-h-[50vh]'>
+    <div className='flex text-black/80 h-[70vh]'>
         <Chats/>
         <Conversation/>
     </div>

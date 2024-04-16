@@ -3,13 +3,16 @@ import { RxAvatar } from "react-icons/rx";
 import { GrSend } from "react-icons/gr";
 import SentMessage from "./SentMessage";
 import ReceivedMessage from "./ReceivedMessage";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 const Conversation = () => {
   const [isConversationSelected, setIsConversationSeleted] = useState(true);
+  const {currentUser} = useCurrentUserContext();
+
   return (
     <>
       {isConversationSelected ? (
-        <div className="w-[35vh] flex flex-col">
+        <div className="w-[20rem] flex flex-col">
           <div className="flex items-center gap-4 border-gray-300/50 bg-black/50 p-1">
             <div className="relative w-max">
               <RxAvatar size={30} />
@@ -39,9 +42,9 @@ const Conversation = () => {
           </div>
         </div>
       ) : (
-        <div className="w-[35vh] flex flex-col gap-3 justify-center items-center text-white bg-black/30">
+        <div className="w-[20rem] flex flex-col gap-3 justify-center items-center text-white bg-black/30">
           <h1 className="uppercase text-[22px] whitespace-nowrap hover:text-gray-300">
-            🎉welcome john doe🎉
+            🎉welcome {currentUser?.displayName}🎉
           </h1>
           <p className="text-emerald-300 hover:text-emerald-400">
             Get Unlimited Chats

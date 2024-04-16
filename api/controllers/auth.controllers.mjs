@@ -18,8 +18,13 @@ export const login = async (req, res) => {
       .send({ error: "No user exist with this username !" });
   const passwordMatched = await bcrypt.compare(password, findUser.password);
   if (passwordMatched) generateJwtToken(findUser._id, res);
-  else return res.send(403).send({ error: "wrong credentials!" });
-  return res.send({ message: "logged in successfully!" });
+  else return res.status(403).send({ error: "wrong credentials!" });
+  return res.status(200).send({
+    username: findUser.username,
+    displayName: findUser.displayName,
+    profilePic: findUser.profilePic,
+    _id: findUser._id,
+  });
 };
 export const logout = (req, res) => {
   if (!req.user)
@@ -38,7 +43,10 @@ export const signup = async (req, res) => {
         .status(401)
         .send({ error: "User with username already exist !" });
     data.password = await bcrypt.hash(data.password, saltRounds);
-    const newUser = await User.create({...data, profilePic : `https://avatar.iran.liara.run/username?username=${data.displayName}`});
+    const newUser = await User.create({
+      ...data,
+      profilePic: `https://avatar.iran.liara.run/username?username=${data.displayName}`,
+    });
     generateJwtToken(newUser._id, res);
     return res
       .status(201)

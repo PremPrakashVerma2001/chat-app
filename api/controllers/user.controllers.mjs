@@ -41,7 +41,7 @@ export const getAllUsers = async (req, res) => {
   try {
     // console.log("all user try!!");
     const allUsers = await User.find({ _id: { $ne: userId } }).select(
-      "username displayName"
+      "username displayName profilePic"
     );
     return res.status(200).send(allUsers);
   } catch (error) {

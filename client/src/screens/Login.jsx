@@ -3,31 +3,35 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext";
 import toast from "react-hot-toast";
+import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const {setIsAuthenticated} = useAuthContext();
+  const { setIsAuthenticated } = useAuthContext();
+  const { setCurrentUser } = useCurrentUserContext();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData)
-      const response = await axios.post("/api/auth/login",formData);
+      // console.log(formData)
+      const response = await axios.post("/api/auth/login", formData);
       console.log(response.data);
-      if(response.status == 200){
-        localStorage.setItem("chat-auth","true");
+      if (response.status == 200) {
+        console.log(response.data);
+        setCurrentUser(response.data);
+        localStorage.setItem("chat-auth", "true");
+        localStorage.setItem("chat-user",JSON.stringify(response.data));
         toast.success("User is Logging In...");
         setIsAuthenticated(true);
-      }
-      else{
+      } else {
         toast.error("Somthing Went wrong!");
         setIsAuthenticated(false);
       }
