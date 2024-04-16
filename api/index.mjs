@@ -4,15 +4,22 @@ import mongoose from "mongoose";
 import routes from "./routes/index.mjs";
 import cookieParser from "cookie-parser";
 import { verifyToken } from "./utils/jwtToken.mjs";
+import cors from "cors";
 
 const app = express();
 const db_url = process.env.DB_URL;
 const port = process.env.PORT || 8080;
 
+app.use(
+  cors({
+    origin: process.env.CLIENT_ORIGIN,
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
-app.use(verifyToken)
+app.use(verifyToken);
 app.use("/api", routes);
 
 app.get("/", (req, res) => {

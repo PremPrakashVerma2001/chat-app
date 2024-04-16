@@ -38,9 +38,11 @@ export const signup = async (req, res) => {
         .status(401)
         .send({ error: "User with username already exist !" });
     data.password = await bcrypt.hash(data.password, saltRounds);
-    const newUser = await User.create(data);
+    const newUser = await User.create({...data, profilePic : `https://avatar.iran.liara.run/username?username=${data.displayName}`});
     generateJwtToken(newUser._id, res);
-    return res.status(201).send(data);
+    return res
+      .status(201)
+      .send({ message: "User is succesfully created and logged in!" });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ error: error });
