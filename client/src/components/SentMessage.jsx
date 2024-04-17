@@ -4,11 +4,6 @@ import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 const SentMessage = ({ message }) => {
   const { currentUser } = useCurrentUserContext();
   const [date, setDate] = useState(new Date(message.createdAt));
-  // console.log("sender ");
-  // useEffect(()=>{
-  //   var d = new Date(date);
-  //   console.log(d);
-  // },[])
   return (
     <div className="flex justify-end p-2 mb-4">
       <div className="bg-slate-800/80 text-white rounded-lg rounded-tr-none py-1 px-2 w-3/4 relative top-3 ">

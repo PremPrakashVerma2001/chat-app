@@ -13,7 +13,6 @@ const Avatar = ({ user }) => {
       className="flex items-center gap-4 border-b-2  border-gray-300/50 p-2 mb-2 cursor-pointer hover:bg-black/40 hover:rounded-md hover:rounded-b-none hover:border-b-emerald-400 duration-200"
     >
       <div className="relative w-max ">
-        {/* <RxAvatar size={40} /> */}
         <img
           src={user.profilePic}
           alt="profile"

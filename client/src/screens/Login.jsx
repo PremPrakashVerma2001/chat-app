@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -10,7 +9,6 @@ const Login = () => {
     username: "",
     password: "",
   });
-  const { setIsAuthenticated } = useAuthContext();
   const { setCurrentUser } = useCurrentUserContext();
 
   const handleChange = (e) => {
@@ -26,20 +24,18 @@ const Login = () => {
       console.log(response.data);
       if (response.status == 200) {
         console.log(response.data);
-        localStorage.setItem("chat-auth", "true");
         localStorage.setItem("chat-user", JSON.stringify(response.data));
         // console.log("current user : ", response.data);
-        setCurrentUser(response.data);
         toast.success("User is Logging In...");
-        setIsAuthenticated(true);
+        setCurrentUser(response.data);
       } else {
         toast.error("Somthing Went wrong!");
-        setIsAuthenticated(false);
+        localStorage.removeItem("chat-user");
+        setCurrentUser(null);
       }
     } catch (error) {
       console.log(error);
       toast.error(error.message);
-      setIsAuthenticated(false);
     }
   };
 
