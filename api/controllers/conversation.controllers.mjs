@@ -3,25 +3,33 @@ import { Message } from "../models/message.model.mjs";
 import { User } from "../models/user.model.mjs";
 
 export const getConversation = async (req, res) => {
-  const {
-    params: { id: receiverId },
-    user: { userId: senderId },
-  } = req;
+  
   console.log(req.originalUrl, req.method);
-  if (!senderId)
-    return res.status(401).send({ error: "User in not logged in!" });
-  const receiver = await User.findById(receiverId);
-  if (!receiver) return res.status(401).send({ error: "Invalid Receiver!" });
+  if (!req.user)
+  return res.status(401).send({ error: "User in not logged in!" });
 
-  let conversation = await Conversation.findOne({
-    participants: { $all: [senderId, receiverId] },
-  }).populate("messages");
-  if (!conversation) {
-    conversation = await Conversation.create({
-      participants: [senderId, receiverId],
-    });
+  try {
+    const {
+      params: { id: receiverId },
+      user: { userId: senderId },
+    } = req;
+  
+    const receiver = await User.findById(receiverId);
+    if (!receiver) return res.status(401).send({ error: "Invalid Receiver!" });
+  
+    let conversation = await Conversation.findOne({
+      participants: { $all: [senderId, receiverId] },
+    }).populate("messages");
+    if (!conversation) {
+      conversation = await Conversation.create({
+        participants: [senderId, receiverId],
+      });
+    }
+    return res.status(200).send(conversation);
+  } catch (error) {
+      console.error(error);
+      return res.status(500).send(error);
   }
-  return res.status(200).send(conversation);
 };
 
 // send message controller

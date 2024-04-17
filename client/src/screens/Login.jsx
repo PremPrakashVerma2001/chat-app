@@ -31,6 +31,7 @@ const Login = () => {
       } else {
         toast.error("Somthing Went wrong!");
         localStorage.removeItem("chat-user");
+        localStorage.removeItem("chat-selected-user");
         setCurrentUser(null);
       }
     } catch (error) {

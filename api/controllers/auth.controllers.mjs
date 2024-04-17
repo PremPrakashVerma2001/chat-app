@@ -7,11 +7,12 @@ import jwt from "jsonwebtoken";
 const saltRounds = 10;
 export const login = async (req, res) => {
   console.log(req.originalUrl, req.method);
-  if (req.user)
-    return res.status(200).send({ error: "user already logged in" });
+  // if (req.user)
+  //   return res.status(409).send({ error: "user already logged in" });
   const {
     body: { username, password },
   } = req;
+  if(!username || !password) return res.status(400).send({ error: "username and password must not be empty!" });
   const findUser = await User.findOne({ username });
   if (!findUser)
     return res

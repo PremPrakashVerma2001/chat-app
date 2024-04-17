@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useCurrentUserContext } from "../contexts/CurrentUserContext";
@@ -14,6 +14,7 @@ const Conversation = () => {
   const { currentUser, setCurrentUser } = useCurrentUserContext();
   const [conversation, setConversation] = useState([]);
   const [messageInputValue, setMessageInputValue] = useState("");
+  const lastMessageRef = useRef(null);
 
   const handleSend = async (e) => {
     e.preventDefault();
@@ -55,8 +56,14 @@ const Conversation = () => {
         setSelectedUser(null);
       }
     };
+    // lastMessageRef?.current?.scrollIntoView({behavior:"smooth"});
     if (selectedUser) getConversation();
+
   }, [selectedUser]);
+
+  useEffect(()=>{
+    lastMessageRef?.current?.scrollIntoView({behavior:"smooth"});
+  },[conversation])
 
   return (
     <>
@@ -68,9 +75,10 @@ const Conversation = () => {
               currentUser._id === message.sender ? (
                 <SentMessage message={message} key={message._id} />
               ) : (
-                <ReceivedMessage message={message} key={message._id} />
+                <ReceivedMessage message={message} key={message._id}  />
               )
             )}
+            <div  ref={lastMessageRef} />
           </div>
           <SendMessageForm
             handleSend={handleSend}

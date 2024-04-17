@@ -35,13 +35,18 @@ export const deleteUser = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   console.log(req.originalUrl, req.method);
-  const {
-    user: { userId },
-  } = req;
-  if (!userId) return res.status(401).send({ error: "User NOT loggd In !" });
+  // const {
+  //   user: { userId },
+  // } = req;
+
+  if (!req.user) return res.status(401).send({ error: "User NOT loggd In !" });
   // console.log("get all users");
+
   try {
     // console.log("all user try!!");
+    const {
+      user: { userId },
+    } = req;
     const allUsers = await User.find({ _id: { $ne: userId } }).select(
       "username displayName profilePic"
     );
