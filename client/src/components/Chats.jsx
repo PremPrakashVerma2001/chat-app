@@ -11,6 +11,8 @@ const Chats = () => {
   const { setSelectedUser } = useSelectedUserContext();
   const { setCurrentUser } = useCurrentUserContext();
   const [users, setUsers] = useState([]);
+  const [searchUsersArray, setSearchUsersArray] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
   const handleExit = async () => {
     try {
@@ -29,11 +31,23 @@ const Chats = () => {
   };
 
   useEffect(() => {
+    const getSearchUsers = async () => {
+      const currentUsersArray = users.filter((user) =>
+        user.displayName.toLowerCase().includes(searchInput.toLowerCase())
+      );
+      setSearchUsersArray(currentUsersArray);
+    };
+    getSearchUsers();
+    // console.log("search input : ", searchInput);
+  }, [searchInput]);
+
+  useEffect(() => {
     const getAllUsers = async () => {
       try {
         const response = await axios.get("/api/users");
         if (response.status === 200) {
           setUsers(response.data);
+          setSearchUsersArray(response.data);
         }
       } catch (error) {
         localStorage.removeItem("chat-user");
@@ -53,12 +67,14 @@ const Chats = () => {
         <input
           type="text"
           placeholder="Search..."
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
           className="w-[22vh] text-xs p-[3px] bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
         />
         <FaSearch size={13} className="hover:text-emerald-400 cursor-pointer" />
       </div>
       <div className=" h-4/5 overflow-auto">
-        {users.map((user) => (
+        {searchUsersArray.map((user) => (
           <Avatar key={user._id} user={user} />
         ))}
       </div>
