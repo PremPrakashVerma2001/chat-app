@@ -1,8 +1,11 @@
 import React from "react";
 import { useSelectedUserContext } from "../contexts/SelectedUserContext";
+import { useSocketContext } from "../contexts/SocketContext";
 
 const Avatar = ({ user }) => {
+  const { onlineUsers } = useSocketContext();
   const { setSelectedUser } = useSelectedUserContext();
+  const found = onlineUsers.find((userId) => userId == user._id);
   const handleClick = () => {
     localStorage.setItem("chat-selected-user", JSON.stringify(user));
     setSelectedUser(user);
@@ -18,7 +21,7 @@ const Avatar = ({ user }) => {
           alt="profile"
           className="rounded-full h-10 w-10 aspect-square"
         />
-        <div className="h-[10px] bg-green-500 ring-1 ring-white rounded-full w-[10px] right-0 top-0 absolute" />
+        <div className={`h-[10px] ${found ? "bg-green-500" : "bg-red-600"}  ring-1 ring-white rounded-full w-[10px] right-0 top-0 absolute `} />
         {/* <div className='h-[10px] bg-red-600 ring-1 ring-white rounded-full w-[10px] right-0 top-0 absolute' /> */}
       </div>
       <div className="text-white">

@@ -1,22 +1,22 @@
 import { Conversation } from "../models/conversation.model.mjs";
 import { Message } from "../models/message.model.mjs";
 import { User } from "../models/user.model.mjs";
+import { getReceiverSocketId, io } from "../socket/socket.io.mjs";
 
 export const getConversation = async (req, res) => {
-  
   console.log(req.originalUrl, req.method);
   if (!req.user)
-  return res.status(401).send({ error: "User in not logged in!" });
+    return res.status(401).send({ error: "User in not logged in!" });
 
   try {
     const {
       params: { id: receiverId },
       user: { userId: senderId },
     } = req;
-  
+
     const receiver = await User.findById(receiverId);
     if (!receiver) return res.status(401).send({ error: "Invalid Receiver!" });
-  
+
     let conversation = await Conversation.findOne({
       participants: { $all: [senderId, receiverId] },
     }).populate("messages");
@@ -27,8 +27,8 @@ export const getConversation = async (req, res) => {
     }
     return res.status(200).send(conversation);
   } catch (error) {
-      console.error(error);
-      return res.status(500).send(error);
+    console.error(error);
+    return res.status(500).send(error);
   }
 };
 
@@ -66,6 +66,12 @@ export const sendMessageToConversation = async (req, res) => {
 
     conversation.messages.push(newMessage._id);
     await Promise.all([conversation.save(), newMessage.save()]);
+
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId)
+      io.to(receiverSocketId).emit("newMessageFromReciever", newMessage);
+    // const socketId = onlineUsers.find((ids)=>(ids == receiverId))
+    // io.
 
     // const wholeConversation = await Conversation.findOne({
     //   participants: { $all: [senderId, receiverId] },

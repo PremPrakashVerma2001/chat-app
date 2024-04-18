@@ -5,8 +5,8 @@ import routes from "./routes/index.mjs";
 import cookieParser from "cookie-parser";
 import { verifyToken } from "./utils/jwtToken.mjs";
 import cors from "cors";
+import { app, server } from "./socket/socket.io.mjs";
 
-const app = express();
 const db_url = process.env.DB_URL;
 const port = process.env.PORT || 8080;
 
@@ -30,7 +30,7 @@ mongoose
   .connect(db_url)
   .then(() => {
     console.log("Your application is successfully connected to database");
-    app.listen(port, () => {
+    server.listen(port, () => {
       console.log(`Your server is running on port : ${port}`);
     });
   })

@@ -8,16 +8,16 @@ import ReceivedMessage from "./ReceivedMessage";
 import ConversationTopBar from "./ConversationTopBar";
 import SendMessageForm from "./SendMessageForm";
 import WelcomeUser from "./WelcomeUser";
+import { useSocketContext } from "../contexts/SocketContext";
 
 const Conversation = () => {
   const { selectedUser, setSelectedUser } = useSelectedUserContext();
   const { currentUser, setCurrentUser } = useCurrentUserContext();
+  const { receiverMessage } = useSocketContext();
   const [conversation, setConversation] = useState([]);
-  const [messageInputValue, setMessageInputValue] = useState("");
   const lastMessageRef = useRef(null);
 
   const handleSend = async (e) => {
-    e.preventDefault();
     const message = e.target.message.value;
     try {
       const response = await axios.post(
@@ -25,8 +25,8 @@ const Conversation = () => {
         { message: message }
       );
       if (response.status === 201) {
+        console.log(response.data);
         setConversation([...conversation, response.data]);
-        setMessageInputValue("");
       }
     } catch (error) {
       console.error(error);
@@ -37,6 +37,11 @@ const Conversation = () => {
       setSelectedUser(null);
     }
   };
+  useEffect(() => {
+    if (receiverMessage) setConversation([...conversation, receiverMessage]);
+    console.log(receiverMessage);
+  }, [receiverMessage]);
+
   useEffect(() => {
     const getConversation = async () => {
       try {
@@ -58,12 +63,11 @@ const Conversation = () => {
     };
     // lastMessageRef?.current?.scrollIntoView({behavior:"smooth"});
     if (selectedUser) getConversation();
-
   }, [selectedUser]);
 
-  useEffect(()=>{
-    lastMessageRef?.current?.scrollIntoView({behavior:"smooth"});
-  },[conversation])
+  useEffect(() => {
+    lastMessageRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }, [conversation]);
 
   return (
     <>
@@ -71,20 +75,22 @@ const Conversation = () => {
         <div className="w-[20rem] flex flex-col">
           <ConversationTopBar />
           <div className="h-full overflow-auto">
-            {conversation.map((message) =>
+            {conversation.map((message, index) =>
               currentUser._id === message.sender ? (
-                <SentMessage message={message} key={message._id} />
+                <SentMessage
+                  message={message}
+                  key={`${message._id}-${index}`}
+                />
               ) : (
-                <ReceivedMessage message={message} key={message._id}  />
+                <ReceivedMessage
+                  message={message}
+                  key={`${message._id}-${index}`}
+                />
               )
             )}
-            <div  ref={lastMessageRef} />
+            <div ref={lastMessageRef} />
           </div>
-          <SendMessageForm
-            handleSend={handleSend}
-            messageInputValue={messageInputValue}
-            setMessageInputValue={setMessageInputValue}
-          />
+          <SendMessageForm handleSend={handleSend} />
         </div>
       ) : (
         <WelcomeUser />
