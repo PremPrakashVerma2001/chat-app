@@ -53,6 +53,7 @@ const Login = () => {
             placeholder="xyz@gmail.com"
             minLength={5}
             maxLength={20}
+            autoComplete="off"
             required
             onChange={handleChange}
             className="w-full text-black p-2 bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400"

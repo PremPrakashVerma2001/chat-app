@@ -8,10 +8,10 @@ function App() {
   const { currentUser } = useCurrentUserContext();
   return (
     <>
-      <h1 className="text-3xl text-black text-center">
-        {currentUser ? "auth truee!!" : "auth falseee!!"}
+      <h1 className=" w-72 text-cyan-950/90 relative mx-auto text-center text-4xl p-1 font-sans bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10  bg-slate-700 border border-black/20 rounded-b-2xl ">
+        Talk<span className="text-slate-600">Hub</span>
       </h1>
-      <div className=" bg-black/20 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden bg-gray-900 rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10 border border-black/20">
+      <div className=" bg-black/50 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 overflow-hidden bg-gray-900 rounded-2xl bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-10 border border-black/20">
         <Routes>
           <Route
             path="/"

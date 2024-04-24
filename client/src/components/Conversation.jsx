@@ -72,7 +72,7 @@ const Conversation = () => {
   return (
     <>
       {selectedUser ? (
-        <div className="w-[20rem] flex flex-col">
+        <div className="w-[30rem] flex flex-col">
           <ConversationTopBar />
           <div className="h-full overflow-auto">
             {conversation.map((message, index) =>

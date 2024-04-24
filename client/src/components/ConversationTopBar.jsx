@@ -8,7 +8,7 @@ const ConversationTopBar = () => {
   const found = onlineUsers.find((userId) => userId == selectedUser._id);
 
   return (
-    <div className="flex items-center gap-4 border-gray-300/50 bg-black/50 p-1">
+    <div className="flex items-center gap-4 border-gray-300/50 bg-black/50 p-3">
       <div className="relative w-max">
         <img
           src={selectedUser?.profilePic}
@@ -19,7 +19,7 @@ const ConversationTopBar = () => {
         {/* <div className='h-[10px] bg-red-600 ring-1 ring-white rounded-full w-[10px] right-0 top-0 absolute' /> */}
       </div>
       <div className="text-white">
-        <h2>{selectedUser?.displayName}</h2>
+        <h2 className={`${found?"text-teal-200":"text-red-300"}`}>{selectedUser?.displayName.toUpperCase()}</h2>
       </div>
     </div>
   );

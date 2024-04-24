@@ -62,16 +62,16 @@ const Chats = () => {
   }, []);
 
   return (
-    <div className=" w-[15rem] border-r-2 p-5 border-gray-300/50 relative">
-      <div className="flex items-center justify-around mb-4">
+    <div className=" w-[17rem] border-r-2 p-5 border-gray-300/50 relative">
+      <div className="flex w-[100%] text-md p-[3px] bg-black/50 rounded-lg  items-center justify-around mb-4">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search By Name..."
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="w-[22vh] text-xs p-[3px] bg-transparent border-b-2 border-b-black/50  focus:outline-none focus:border-b-2 focus:border-b-emerald-400 "
+          className=" text-teal-200 p-[3px] rouded-lg bg-transparent  focus:outline-none  "
         />
-        <FaSearch size={13} className="hover:text-emerald-400 cursor-pointer" />
+        <FaSearch size={15} className="hover:text-emerald-400 cursor-pointer" />
       </div>
       <div className=" h-4/5 overflow-auto">
         {searchUsersArray.map((user) => (

@@ -13,11 +13,13 @@ const SendMessageForm = ({ handleSend }) => {
       <form onSubmit={handleSubmit} className="pr-2 flex items-center">
         <input
           type="text"
-          placeholder="message..."
+          placeholder="Write your message here..."
           name="message"
           id="message"
           value={currentMessage}
           onChange={(e) => setCurrentMessage(e.target.value)}
+          autoComplete="off"
+          autoFocus
           className="bg-transparent focus:outline-none text-white p-2 w-full"
         />
         <button type="submit" className="inline">

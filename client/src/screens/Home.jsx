@@ -4,7 +4,7 @@ import Conversation from "../components/Conversation";
 
 const Home = () => {
   return (
-    <div className="flex text-black/80 h-[70vh]">
+    <div className="flex text-black/80 h-[80vh]">
       <Chats />
       <Conversation />
     </div>

@@ -21,11 +21,26 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Toaster
               toastOptions={{
                 className: "",
-                style: {
-                  border: "1px solid #713200",
-                  padding: "16px",
-                  color: "#FF204E",
+                success:{
+                  style: {
+                    border: "1px solid white",
+                    padding: "10px",
+                    color: "green",
+                    borderRadius:'10px'
+                  },
+                  position:'top-right',
+                  icon:'✅'
                 },
+                error:{
+                  style: {
+                    border: "1px solid white",
+                    padding: "10px",
+                    color: "red",
+                    borderRadius:'10px'
+                  },
+                  position:'top-right',
+                  icon:'❌'
+                }
               }}
             />
           </SocketContextProvider>

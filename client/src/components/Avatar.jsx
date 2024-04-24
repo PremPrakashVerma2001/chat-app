@@ -25,7 +25,7 @@ const Avatar = ({ user }) => {
         {/* <div className='h-[10px] bg-red-600 ring-1 ring-white rounded-full w-[10px] right-0 top-0 absolute' /> */}
       </div>
       <div className="text-white">
-        <h2>{user.displayName}</h2>
+        <h2 className={`${found?"text-teal-200":"text-red-300"}`} >{user.displayName.toUpperCase()}</h2>
       </div>
     </div>
   );
